@@ -1,9 +1,11 @@
 package com.application.tasktocalendar.model
 
+import androidx.lifecycle.LiveData
 import com.application.tasktocalendar.apiclient.ApiClient
 import com.application.tasktocalendar.data.*
 import com.application.tasktocalendar.response.CreateTaskClass
 import com.application.tasktocalendar.response.GetResponseDto
+import com.application.tasktocalendar.response.Task
 import com.application.tasktocalendar.response.UserIdResponseModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,11 +19,28 @@ class Repo @Inject constructor(val taskDao: TaskDao, val apiClient: ApiClient) {
         return try {
 
             val response = apiClient.getTask(UserIdResponseModel(1001))
-//            taskDao.addtask(response.tasks)
+
+            saveToDateBase(response)
+
             responseHandler.handleSuccess(response)
         } catch (e: Exception) {
             responseHandler.handleException(e)
         }
+    }
+
+    private fun saveToDateBase(response: GetResponseDto) {
+        val listOfTask = ArrayList<TaskTable>()
+        response.tasks.forEach {
+            val newTask =
+                TaskTable(it.taskDetail.date, it.taskDetail.title, it.taskDetail.description)
+            listOfTask.add(newTask)
+        }
+        taskDao.deleteall()
+        taskDao.addallTask(listOfTask)
+    }
+
+    fun getData(): LiveData<List<TaskTable>> {
+        return taskDao.getDB()
     }
 
     fun createTask(createTaskClass: CreateTaskClass) {

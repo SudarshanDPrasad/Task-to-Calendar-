@@ -1,5 +1,8 @@
 package com.application.tasktocalendar.ui
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -7,10 +10,12 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.application.tasktocalendar.R
 import com.application.tasktocalendar.adaptor.DateAdaptor
+import com.application.tasktocalendar.adaptor.OffLineAdaptorvar
 import com.application.tasktocalendar.adaptor.TasklistAdaptor
 import com.application.tasktocalendar.data.Status
 import com.application.tasktocalendar.data.TaskDao
 import com.application.tasktocalendar.data.TaskRoomDataBase
+import com.application.tasktocalendar.data.TaskTable
 import com.application.tasktocalendar.inter.OnCLickDelete
 import com.application.tasktocalendar.model.TaskViewModel
 import com.application.tasktocalendar.response.GetResponseDto
@@ -26,6 +31,7 @@ class TaskDisplayActivity : AppCompatActivity(), OnCLickDelete {
     lateinit var taskDao: TaskDao
     lateinit var taskViewModel: TaskViewModel
     private var list = emptyList<Task>()
+    private var Dblist = mutableListOf<TaskTable>()
     lateinit var tasklistAdaptor: TasklistAdaptor
 
 
@@ -37,9 +43,32 @@ class TaskDisplayActivity : AppCompatActivity(), OnCLickDelete {
         taskDao = taskRoomDataBase.getDao()
         taskViewModel = ViewModelProviders.of(this).get(TaskViewModel::class.java)
 
-        ApiResponse()
+
+        // Internet Check
+        val connectivityManager: ConnectivityManager =
+            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork: NetworkInfo? = connectivityManager.activeNetworkInfo
+        var isConnected: Boolean? = activeNetwork?.isConnectedOrConnecting
+
+        if (isConnected == true) {
+            ApiResponse()
+        } else {
+            databaseListView()
+        }
     }
 
+    //When There is No Internet This will display
+    private fun databaseListView() {
+        Toast.makeText(this, " There is No NetWork Coverage The Task Cannot be deleted only View ", Toast.LENGTH_SHORT).show()
+        taskViewModel.getTaskDB().observe(this, {
+            Dblist.clear()
+            Dblist.addAll(it)
+            task_toshow_recycler.adapter = OffLineAdaptorvar(Dblist)
+            task_toshow_recycler.layoutManager = LinearLayoutManager(this)
+        })
+    }
+
+    // When There is a Internet This will display
     private fun ApiResponse() {
         taskViewModel.response().observe(this, {
             when (it.status) {
@@ -48,7 +77,7 @@ class TaskDisplayActivity : AppCompatActivity(), OnCLickDelete {
                 }
                 Status.SUCCESS -> {
                     list = it.data?.tasks!! as ArrayList<Task>
-                    tasklistAdaptor = TasklistAdaptor(list,this)
+                    tasklistAdaptor = TasklistAdaptor(list, this)
                     task_toshow_recycler.adapter = tasklistAdaptor
                     task_toshow_recycler.layoutManager = LinearLayoutManager(this)
                     tasklistAdaptor.notifyDataSetChanged()

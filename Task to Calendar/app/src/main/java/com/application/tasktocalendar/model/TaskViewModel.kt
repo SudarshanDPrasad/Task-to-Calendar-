@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.application.tasktocalendar.response.CreateTaskClass
 import com.application.tasktocalendar.data.Resource
+import com.application.tasktocalendar.data.TaskTable
 import com.application.tasktocalendar.response.GetResponseDto
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -23,6 +24,10 @@ class TaskViewModel @Inject constructor(val repo: Repo) : ViewModel() {
             val data = repo.getResponseda()
             emit(data)
         }
+    }
+
+    fun getTaskDB(): LiveData<List<TaskTable>> {
+        return repo.getData()
     }
 
     fun deleteTaskss(delete: Int) {
