@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Task to Calendar</string>
+    <string name="swipeleft"><![CDATA[<-]]></string>
+    <string name="SwipeRight"><![CDATA[->]]></string>
+    <string name="sat">Sat</string>
+    <string name="fri">Fri</string>
+    <string name="thur">Thur</string>
+    <string name="wed">Wed</string>
+    <string name="tue">Tue</string>
+    <string name="mon">Mon</string>
+    <string name="sun">Sun</string>
+    <string name="enter_the_task_to_added">Enter the task to added</string>
+    <string name="enter_the_description_to_added">Enter the Description to added</string>
+    <string name="save_the_task">Save the Task</string>
+</resources>
