@@ -10,6 +10,8 @@ import com.application.tasktocalendar.inter.OnCLickDelete
 import com.application.tasktocalendar.response.Task
 import com.application.tasktocalendar.response.TaskDetail
 
+
+// To show when the network is There
 class TasklistAdaptor(
     var listoftask: List<Task>,
     val listener: OnCLickDelete

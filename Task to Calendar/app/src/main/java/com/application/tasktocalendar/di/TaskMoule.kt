@@ -14,6 +14,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
+
+// Module class
 @Module
 @InstallIn(SingletonComponent::class)
 object TaskMoule {

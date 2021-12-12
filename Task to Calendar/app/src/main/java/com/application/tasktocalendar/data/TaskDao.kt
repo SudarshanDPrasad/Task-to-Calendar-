@@ -11,12 +11,15 @@ import com.application.tasktocalendar.response.Task
 interface TaskDao {
 
 
+    // Add Task in DB
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addallTask(taskTable: List<TaskTable>)
 
+    // Delete Task in DB
     @Query("delete from task_db")
     fun deleteall()
 
+    // Show Task in DB
     @Query("select * from task_db ")
     fun getDB(): LiveData<List<TaskTable>>
 }

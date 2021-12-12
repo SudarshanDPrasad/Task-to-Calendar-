@@ -11,6 +11,8 @@ import com.application.tasktocalendar.databinding.RecyclerToshowTaskBinding
 import com.application.tasktocalendar.inter.OnCLickDelete
 import com.application.tasktocalendar.response.Task
 
+
+// To Display The data on The Net Off
 class OffLineAdaptorvar(
 
     val listoftask: List<TaskTable>,
@@ -34,8 +36,6 @@ class OffLineAdaptorvar(
     override fun getItemCount(): Int {
         return listoftask.size
     }
-
-
 }
 
 class TaskListHolderData(
@@ -44,7 +44,5 @@ class TaskListHolderData(
 
     fun setData(taskTable: TaskTable) {
         offlineRoomdatabaseBinding.taskDetials = taskTable
-
     }
-
 }

@@ -15,10 +15,13 @@ import javax.inject.Inject
 @HiltViewModel
 class TaskViewModel @Inject constructor(val repo: Repo) : ViewModel() {
 
+
+    // To Create Task
     fun createNewTask(createTaskClass: CreateTaskClass) {
         repo.createTask(createTaskClass)
     }
 
+    // To get Response
     fun response(): LiveData<Resource<GetResponseDto>> {
         return liveData(Dispatchers.IO) {
             val data = repo.getResponseda()
@@ -26,10 +29,12 @@ class TaskViewModel @Inject constructor(val repo: Repo) : ViewModel() {
         }
     }
 
+    // To get Response DataBase
     fun getTaskDB(): LiveData<List<TaskTable>> {
         return repo.getData()
     }
 
+    // To Delete The task
     fun deleteTaskss(delete: Int) {
         repo.deleteTask(delete)
     }

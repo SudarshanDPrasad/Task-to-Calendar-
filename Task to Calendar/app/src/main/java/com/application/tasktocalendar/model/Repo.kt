@@ -15,6 +15,8 @@ import javax.inject.Inject
 class Repo @Inject constructor(val taskDao: TaskDao, val apiClient: ApiClient) {
 
     val responseHandler: ResponseHandler = ResponseHandler()
+
+    // To Get The Response
     suspend fun getResponseda(): Resource<GetResponseDto> {
         return try {
 
@@ -28,6 +30,7 @@ class Repo @Inject constructor(val taskDao: TaskDao, val apiClient: ApiClient) {
         }
     }
 
+    // To Save in DB
     private fun saveToDateBase(response: GetResponseDto) {
         val listOfTask = ArrayList<TaskTable>()
         response.tasks.forEach {
@@ -39,10 +42,12 @@ class Repo @Inject constructor(val taskDao: TaskDao, val apiClient: ApiClient) {
         taskDao.addallTask(listOfTask)
     }
 
+    // To load Db Task
     fun getData(): LiveData<List<TaskTable>> {
         return taskDao.getDB()
     }
 
+    // To Create Task
     fun createTask(createTaskClass: CreateTaskClass) {
         CoroutineScope(Dispatchers.IO).launch {
             val response = apiClient.createTask(token = "d95a5f11-13ef-419a-be7e-5a64cac73624",
@@ -50,6 +55,7 @@ class Repo @Inject constructor(val taskDao: TaskDao, val apiClient: ApiClient) {
         }
     }
 
+    // To Delete Task
     fun deleteTask(delete: Int) {
         CoroutineScope(Dispatchers.IO).launch {
             apiClient.deleteTask(1001, delete)

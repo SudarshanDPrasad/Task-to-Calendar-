@@ -86,6 +86,8 @@ class TaskDisplayActivity : AppCompatActivity(), OnCLickDelete {
         })
     }
 
+
+    // To Delete The Task
     override fun DeleteClick(position: Int, taskid: Int) {
 
         taskViewModel.deleteTaskss(taskid)

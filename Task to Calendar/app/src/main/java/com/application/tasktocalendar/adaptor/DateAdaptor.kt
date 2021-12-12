@@ -8,6 +8,8 @@ import com.application.tasktocalendar.R
 import com.application.tasktocalendar.databinding.CalendarRecyclerBinding
 import com.application.tasktocalendar.inter.OnClickDate
 
+
+// To Desiplay The date
 class DateAdaptor(
     val dateOfMonth: ArrayList<String>,
     val itemoncick : OnClickDate
@@ -35,8 +37,4 @@ class DateAdaptor(
 
 class DateHolder(
     val calendarRecyclerBinding: CalendarRecyclerBinding,
-) : RecyclerView.ViewHolder(calendarRecyclerBinding.root) {
-
-
-
-}
+) : RecyclerView.ViewHolder(calendarRecyclerBinding.root)
