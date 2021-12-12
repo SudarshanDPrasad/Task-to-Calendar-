@@ -40,11 +40,12 @@ This project is used by the following companies:
     //Retrofit
     def retrofit2_version = "2.9.0"
     def okhttp3_version = "4.9.0"
-//retrofit
+    
+     //retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit2_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit2_version"
 
-//Okhttp3
+    //Okhttp3
     implementation "com.squareup.okhttp3:okhttp:$okhttp3_version"
 
     //hilt
